@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,6 +18,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 public class winD extends JFrame{//窗口类
+	
+	private JFileChooser fileChooser = new JFileChooser();
 	
 	void win (String s, int x, int y, int w, int h) {
         JFrame jf=new JFrame(s);
@@ -31,15 +34,58 @@ public class winD extends JFrame{//窗口类
 		TextField tf1 = new TextField("              .pdf");
 		JLabel l2=new JLabel("输入txt文件保存地址（绝对路径）：");
 		TextField tf2 = new TextField("              .txt");
-		JButton button1 = new JButton("转化");
+		JButton button1 = new JButton("选择");
+		JButton button2 = new JButton("默认");
+		JButton button3 = new JButton("转化");
 	
 		
 		p.add(l);
 		p.add(tf1);
+		p.add(button1);
 		p.add(l2);
 		p.add(tf2);
-		p.add(button1);
+		p.add(button2);
+		p.add(button3);
+
+		
+		
 		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				int i = fileChooser.showOpenDialog(getContentPane());// 显示文件选择对话框
+				
+				// 判断用户单击的是否为“打开”按钮
+				if (i == JFileChooser.APPROVE_OPTION) {
+					
+					File selectedFile = fileChooser.getSelectedFile();// 获得选中的文件对象
+					tf1.setText(selectedFile.getPath());// 显示选中文件的名称
+				}
+			
+			}
+			
+			
+		});
+
+		
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				
+				String ss=tf1.getText().trim();
+				ss=ss.substring(0,ss.length()-3);
+					tf2.setText(ss+"txt");// 显示选中文件的名称
+				
+
+			
+			}
+			
+			
+		});
+
+		
+		button3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				
@@ -53,8 +99,6 @@ public class winD extends JFrame{//窗口类
 			
 			
 		});
-		
-		
 		
 		
 	}
